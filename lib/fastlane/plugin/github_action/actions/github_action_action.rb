@@ -139,13 +139,16 @@ module Fastlane
         deploy_keys = get_deploy_keys_resp[:json] || []
         deploy_keys.each do |deploy_key|
           if deploy_key["title"] == deploy_key_title
-            if UI.confirm("Deploy Key for the match repo already exists... Delete it?")
-              self.match_repo_delete(params, "/keys/#{deploy_key["id"]}")
-              UI.message("Deleted existing Deploy Key")
-              sleep(1)
-            else
-              return {}
-            end
+            # To reuse the same repo and do it from a github action, we cannot have any interaction
+            #if UI.confirm("Deploy Key for the match repo already exists... Delete it?")
+            #  self.match_repo_delete(params, "/keys/#{deploy_key["id"]}")
+            #  UI.message("Deleted existing Deploy Key")
+            #  sleep(1)
+            #else
+            #  return {}
+            #end
+
+            return {}
           end
         end
 
