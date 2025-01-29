@@ -18,8 +18,8 @@ module Fastlane
         "MATCH_DEPLOY_KEY"  
       end
 
-      def self.deploy_key_title
-        "Match Deploy Key (created by fastalne-plugin-github_actions)"
+      def self.deploy_key_title(params)
+        "Match Deploy Key (created by fastalne-plugin-github_actions) for #{params[:org]}/#{params[:repo]}"
       end
       
       def self.check_for_setup_ci_in_fastfile
@@ -138,17 +138,14 @@ module Fastlane
 
         deploy_keys = get_deploy_keys_resp[:json] || []
         deploy_keys.each do |deploy_key|
-          if deploy_key["title"] == deploy_key_title
-            # To reuse the same repo and do it from a github action, we cannot have any interaction
-            #if UI.confirm("Deploy Key for the match repo already exists... Delete it?")
-            #  self.match_repo_delete(params, "/keys/#{deploy_key["id"]}")
-            #  UI.message("Deleted existing Deploy Key")
-            #  sleep(1)
-            #else
-            #  return {}
-            #end
-
-            return {}
+          if deploy_key["title"] == self.deploy_key_title(params)
+          if UI.confirm("Deploy Key for the match repo already exists... Delete it?")
+              self.match_repo_delete(params, "/keys/#{deploy_key["id"]}")
+              UI.message("Deleted existing Deploy Key")
+              sleep(1)
+            else
+              return {}
+            end
           end
         end
 
@@ -156,7 +153,7 @@ module Fastlane
         k = SSHKey.generate()
 
         body = {
-          title: deploy_key_title,
+          title: self.deploy_key_title(params),
           key: k.ssh_public_key,
           read_only: !params[:writable_deploy_key]
         }
