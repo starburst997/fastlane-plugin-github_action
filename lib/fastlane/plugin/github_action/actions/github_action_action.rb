@@ -23,17 +23,17 @@ module Fastlane
       end
       
       def self.check_for_setup_ci_in_fastfile
-        fastfiles = Dir.glob("./*/Fastfile").map do |path|
-          File.absolute_path(path)
-        end
-       
-        fastfiles.each do |path|
-          content = File.read(path)
-
-          if !content.include?("setup_ci")
-            UI.confirm("`setup_ci` is not detected for '#{path}'. Do you still want to continue on?")
-          end
-        end
+        #fastfiles = Dir.glob("./*/Fastfile").map do |path|
+        #  File.absolute_path(path)
+        #end
+        #
+        #fastfiles.each do |path|
+        #  content = File.read(path)
+        #  
+        #  if !content.include?("setup_ci")
+        #    UI.confirm("`setup_ci` is not detected for '#{path}'. Do you still want to continue on?")
+        #  end
+        #end
 
       end
 
