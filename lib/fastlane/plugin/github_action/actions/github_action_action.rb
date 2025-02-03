@@ -11,7 +11,7 @@ module Fastlane
 
         additional_secrets = self.generate_deploy_key(params)
         secret_names = self.post_secrets(params, additional_secrets)
-        self.generate_workflow_template(params, secret_names)
+        #self.generate_workflow_template(params, secret_names)
       end
 
       def self.match_deploy_key
@@ -139,14 +139,14 @@ module Fastlane
         deploy_keys = get_deploy_keys_resp[:json] || []
         deploy_keys.each do |deploy_key|
           if deploy_key["title"] == self.deploy_key_title(params)
-          if UI.confirm("Deploy Key for the match repo already exists... Delete it?")
-              self.match_repo_delete(params, "/keys/#{deploy_key["id"]}")
-              UI.message("Deleted existing Deploy Key")
-              sleep(1)
-            else
-              return {}
-            end
-          end
+          #if UI.confirm("Deploy Key for the match repo already exists... Delete it?")
+          #    self.match_repo_delete(params, "/keys/#{deploy_key["id"]}")
+          #    UI.message("Deleted existing Deploy Key")
+          #    sleep(1)
+          #  else
+          #    return {}
+          #  end
+          #end
         end
 
         require 'sshkey'
@@ -192,7 +192,7 @@ module Fastlane
 
         encrypted_secrets.reject! do |k,v|
           if existing_secret_names.include?(k.to_s)
-            !UI.confirm("Overwrite #{k}?")
+            !true
           end
         end
 
