@@ -190,11 +190,11 @@ module Fastlane
           secret["name"].to_s
         end
 
-        encrypted_secrets.reject! do |k,v|
-          if existing_secret_names.include?(k.to_s)
-            !true
-          end
-        end
+        #encrypted_secrets.reject! do |k,v|
+        #  if existing_secret_names.include?(k.to_s)
+        #    !UI.confirm("Overwrite #{k}?")
+        #  end
+        #end
 
         encrypted_secrets.each do |k,v|
           body = {
