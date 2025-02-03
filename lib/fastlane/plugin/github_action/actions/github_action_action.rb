@@ -164,6 +164,10 @@ module Fastlane
        
         secrets = {}
         secrets[match_deploy_key] = k.private_key  
+
+        # Save deploy key in file to re-use in workflow
+        File.write('MATCH_DEPLOY_KEY', k.private_key)
+
         return secrets
       end
 
