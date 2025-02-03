@@ -139,14 +139,14 @@ module Fastlane
         deploy_keys = get_deploy_keys_resp[:json] || []
         deploy_keys.each do |deploy_key|
           if deploy_key["title"] == self.deploy_key_title(params)
-          #if UI.confirm("Deploy Key for the match repo already exists... Delete it?")
-          #    self.match_repo_delete(params, "/keys/#{deploy_key["id"]}")
-          #    UI.message("Deleted existing Deploy Key")
-          #    sleep(1)
-          #  else
-          #    return {}
-          #  end
-          #end
+            #if UI.confirm("Deploy Key for the match repo already exists... Delete it?")
+            #  self.match_repo_delete(params, "/keys/#{deploy_key["id"]}")
+            #  UI.message("Deleted existing Deploy Key")
+            #  sleep(1)
+            #else
+            #  return {}
+            #end
+          end
         end
 
         require 'sshkey'
@@ -190,11 +190,11 @@ module Fastlane
           secret["name"].to_s
         end
 
-        #encrypted_secrets.reject! do |k,v|
-        #  if existing_secret_names.include?(k.to_s)
-        #    !UI.confirm("Overwrite #{k}?")
-        #  end
-        #end
+        encrypted_secrets.reject! do |k,v|
+          if existing_secret_names.include?(k.to_s)
+            !true
+          end
+        end
 
         encrypted_secrets.each do |k,v|
           body = {
