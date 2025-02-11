@@ -19,7 +19,7 @@ module Fastlane
       end
 
       def self.deploy_key_title(params)
-        "Match Deploy Key (created by fastalne-plugin-github_actions) for #{params[:org]}/#{params[:repo]}"
+        "Match Deploy Key (created by fastlane-plugin-github_actions) for #{params[:org]}/#{params[:repo]}"
       end
       
       def self.check_for_setup_ci_in_fastfile
